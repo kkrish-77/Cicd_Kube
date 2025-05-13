@@ -49,6 +49,6 @@ jobs:
     - name: Deploy to GKE
       run: |
         export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-        sed -i 's|image:.*|image: $DOCKER_REGISTRY/todo-app:latest|' k8s/deployment.yaml
+        sed -i "s|IMAGE_TO_REPLACE|$DOCKER_REGISTRY/todo-app:latest|g" k8s/deployment.yaml
         kubectl apply -f k8s/deployment.yaml
         kubectl apply -f k8s/service.yaml 

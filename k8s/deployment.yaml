@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: todo-app
-        image: ${DOCKER_REGISTRY}/todo-app:latest
+        image: IMAGE_TO_REPLACE
         ports:
         - containerPort: 3000
         resources:
