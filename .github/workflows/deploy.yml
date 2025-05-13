@@ -37,11 +37,24 @@ jobs:
         docker tag $DOCKER_REGISTRY/todo-app:${{ github.sha }} $DOCKER_REGISTRY/todo-app:latest
         docker push $DOCKER_REGISTRY/todo-app:latest
 
+    - name: Install GKE Auth Plugin
+      run: |
+        echo "Installing GKE auth plugin..."
+        apt-get update && apt-get install -y apt-transport-https ca-certificates gnupg
+        echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+        curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+        apt-get update && apt-get install -y google-cloud-sdk-gke-gcloud-auth-plugin
+        echo "use_gke_gcloud_auth_plugin=True" >> /etc/environment
+        export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
     - name: Get GKE credentials
-      run: gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE
+      run: |
+        export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+        gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE
 
     - name: Deploy to GKE
       run: |
+        export USE_GKE_GCLOUD_AUTH_PLUGIN=True
         sed -i 's|image:.*|image: $DOCKER_REGISTRY/todo-app:latest|' k8s/deployment.yaml
         kubectl apply -f k8s/deployment.yaml
         kubectl apply -f k8s/service.yaml 
