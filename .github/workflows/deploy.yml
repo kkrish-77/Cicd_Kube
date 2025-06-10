@@ -57,5 +57,5 @@ jobs:
       run: |
         export USE_GKE_GCLOUD_AUTH_PLUGIN=True
         kubectl set image deployment/${{ env.APP_NAME }} \
-          ${{ env.APP_NAME }}=$IMAGE_NAME:latest
-        kubectl rollout status deployment/${{ env.APP_NAME }}
+          ${{ env.APP_NAME }}=$IMAGE_NAME:latest -n todo-app
+        kubectl rollout status deployment/${{ env.APP_NAME }} -n todo-app
