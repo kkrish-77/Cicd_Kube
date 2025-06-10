@@ -18,6 +18,7 @@ spec:
       containers:
       - name: todo-app
         image: $IMAGE_NAME:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
         resources:
