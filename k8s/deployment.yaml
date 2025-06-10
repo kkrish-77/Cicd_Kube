@@ -12,6 +12,8 @@ spec:
       app: todo-app
   template:
     metadata:
+      annotations:
+        checksum/config: "$GITHUB_SHA"
       labels:
         app: todo-app
     spec:
