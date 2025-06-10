@@ -48,6 +48,7 @@ jobs:
 
     - name: Apply Kubernetes Deployment
       run: |
+        sudo apt-get update && sudo apt-get install -y gettext-base
         export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-        kubectl apply -f k8s/deployment.yaml -n $NAMESPACE
+        cat k8s/deployment.yaml | envsubst | kubectl apply -f - -n $NAMESPACE
         kubectl rollout status deployment/$APP_NAME -n $NAMESPACE
