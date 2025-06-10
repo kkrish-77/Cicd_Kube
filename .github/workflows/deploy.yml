@@ -11,6 +11,7 @@ env:
   GKE_ZONE: ${{ secrets.GKE_ZONE }}
   APP_NAME: todo-app
   IMAGE_NAME: asia-southeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/todo-app-repo/todo-app
+  NAMESPACE: todo-app
 
 jobs:
   build-and-deploy:
@@ -30,18 +31,10 @@ jobs:
       with:
         install_components: 'gke-gcloud-auth-plugin'
 
-    - name: Verify GCP Configuration
-      run: |
-        echo "Project ID: $PROJECT_ID"
-        echo "GKE Cluster: $GKE_CLUSTER"
-        echo "GKE Zone: $GKE_ZONE"
-        gcloud config list
-        gcloud container clusters list
-
     - name: Configure Docker for Artifact Registry
       run: gcloud auth configure-docker asia-southeast1-docker.pkg.dev --quiet
 
-    - name: Build and Push Docker image
+    - name: Build and Push Docker Image
       run: |
         docker build -t $IMAGE_NAME:${{ github.sha }} .
         docker push $IMAGE_NAME:${{ github.sha }}
@@ -53,9 +46,8 @@ jobs:
         export USE_GKE_GCLOUD_AUTH_PLUGIN=True
         gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $PROJECT_ID
 
-    - name: Update Deployment in GKE
+    - name: Update Deployment Image in GKE
       run: |
         export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-        kubectl set image deployment/${{ env.APP_NAME }} \
-          ${{ env.APP_NAME }}=$IMAGE_NAME:latest -n todo-app
-        kubectl rollout status deployment/${{ env.APP_NAME }} -n todo-app
+        kubectl set image deployment/$APP_NAME $APP_NAME=$IMAGE_NAME:latest -n $NAMESPACE
+        kubectl rollout status deployment/$APP_NAME -n $NAMESPACE
