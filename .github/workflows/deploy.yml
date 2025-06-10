@@ -30,6 +30,14 @@ jobs:
       with:
         install_components: 'gke-gcloud-auth-plugin'
 
+    - name: Verify GCP Configuration
+      run: |
+        echo "Project ID: $PROJECT_ID"
+        echo "GKE Cluster: $GKE_CLUSTER"
+        echo "GKE Zone: $GKE_ZONE"
+        gcloud config list
+        gcloud container clusters list
+
     - name: Configure Docker for Artifact Registry
       run: gcloud auth configure-docker asia-southeast1-docker.pkg.dev --quiet
 
@@ -43,7 +51,7 @@ jobs:
     - name: Get GKE Credentials
       run: |
         export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-        gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE
+        gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $PROJECT_ID
 
     - name: Update Deployment in GKE
       run: |
