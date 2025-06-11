@@ -1,61 +1,59 @@
-# Example to-do List Application
+# ✅ GKE TODO App with GitHub Actions CI/CD
 
-This repository is a simple to-do list manager that runs on Node.js.
+## 🚀 Project Highlights
 
-## Getting started
-
-Download [Docker Desktop](https://www.docker.com/products/docker-desktop) for Mac or Windows. Docker Compose will be automatically installed. 
-On Linux, make sure you have the latest version of [Compose](https://docs.docker.com/compose/install/).
-
-## Clone the repository
-
-Open a terminal and clone this sample application.
-
-```
- git clone https://github.com/dockersamples/todo-list-app
-```
-
-## Run the app
-
-Navigate into the todo-list-app directory:
-
-```
-docker compose up -d --build
-```
-
-When you run this command, you should see an output like this:
-
-```
-[+] Running 4/4
-✔ app 3 layers [⣿⣿⣿]      0B/0B            Pulled           7.1s
-  ✔ e6f4e57cc59e Download complete                          0.9s
-  ✔ df998480d81d Download complete                          1.0s
-  ✔ 31e174fedd23 Download complete                          2.5s
-[+] Running 2/4
-  ⠸ Network todo-list-app_default           Created         0.3s
-  ⠸ Volume "todo-list-app_todo-mysql-data"  Created         0.3s
-  ✔ Container todo-list-app-app-1           Started         0.3s
-  ✔ Container todo-list-app-mysql-1         Started         0.3s
-```
-
-## List the services
-
-```
-docker compose ps
-NAME                    IMAGE            COMMAND                  SERVICE   CREATED          STATUS          PORTS
-todo-list-app-app-1     node:18-alpine   "docker-entrypoint.s…"   app       24 seconds ago   Up 7 seconds    127.0.0.1:3000->3000/tcp
-todo-list-app-mysql-1   mysql:8.0        "docker-entrypoint.s…"   mysql     24 seconds ago   Up 23 seconds   3306/tcp, 33060/tcp
-```
-
-If you look at the Docker Desktop GUI, you can see the containers and dive deeper into their configuration.
+<p align="left">
+  <img src="https://img.shields.io/badge/Like-👍-blueviolet?style=for-the-badge&logo=github" alt="Like Badge" />
+  <img src="https://img.shields.io/badge/GKE-Deployed-success?style=for-the-badge&logo=googlecloud" alt="GKE Deployed" />
+  <img src="https://img.shields.io/badge/CI/CD-GitHub%20Actions-blue?style=for-the-badge&logo=githubactions" alt="CI/CD" />
+  <img src="https://img.shields.io/badge/SSL-TLS-green?style=for-the-badge&logo=letsencrypt" alt="SSL Secured" />
+</p>
 
 
+---
 
+## 🧾 Project Overview
 
-<img width="1330" alt="image" src="https://github.com/dockersamples/todo-list-app/assets/313480/d85a4bcf-e2c3-4917-9220-7d9b9a78dc54">
+This is a **frontend-only TODO application** that connects directly to a hosted SQL database (like Supabase or PostgreSQL). The app is:
 
+- 🚀 Deployed on **Google Kubernetes Engine (GKE)**
+- 🔁 Automatically deployed using **GitHub Actions CI/CD**
+- 🌐 Exposed with **NGINX Ingress Controller**
+- 🔐 Secured via **Let's Encrypt TLS**
+- 🌍 Mapped to a **custom domain**
 
-## Access the app
+---
 
-The to-do list app will be running at [http://localhost:3000](http://localhost:3000).
+## 🎥 Demo
 
+https://github.com/user-attachments/assets/888a5ce0-4664-4169-b06d-a2931bb90a73
+
+---
+
+## ⚙️ Tech Stack
+
+- 💻 Frontend: Next.js
+- 🗃️ SQL Database: PostgreSQL
+- ☸️ Kubernetes (GKE)
+- 🐳 Docker
+- 🌀 NGINX Ingress
+- 🔐 cert-manager + TLS
+- 🛠️ GitHub Actions
+
+---
+
+## 📁 Project Structure
+
+```bash
+.
+├── .github/workflows/deploy.yml    # GitHub Actions pipeline
+├── k8s/
+│   ├── deployment.yaml
+│   ├── service.yaml
+│   ├── ingress.yaml
+│   ├── cluster-issuer.yaml
+│   └── tls-secret.yaml
+├── Dockerfile
+├── public/
+├── src/
+├── README.md
