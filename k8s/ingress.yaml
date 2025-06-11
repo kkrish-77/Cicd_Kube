@@ -14,7 +14,7 @@ spec:
     - todo.scmapml.com  # Replace with your actual domain
     secretName: todo-app-tls
   rules:
-  - host: todo.scmapml.com  # Replace with your actual domain
+  - host: example.com  # Replace with your actual domain
     http:
       paths:
       - path: /
