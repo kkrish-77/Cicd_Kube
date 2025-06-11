@@ -51,8 +51,8 @@ function TodoListCard() {
 
     return (
         <React.Fragment>
-            <h1 className="text-left mb-4">My Todo List 4.0</h1>
-            <p className="text-left text-muted mb-4">Version 1.2 - Updated UI</p>
+            <h1 className="text-left mb-4">Todo List </h1>
+            <p className="text-left text-muted mb-4">Version 1.3 - Updated UI</p>
             <AddItemForm onNewItem={onNewItem} />
             {items.length === 0 && (
                 <p className="text-center">No items yet! Add one above!</p>
